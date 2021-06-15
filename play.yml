@@ -10,6 +10,17 @@
                 state: latest
             become: yes
 
+          - name: Copying the code
+            copy:
+                src: /code/solitude/
+                dest: /var/www/html/
+            become: yes
+
+                #          - name: copy the code into html
+                #copy:
+                #src: /tmp/solitude/
+                #remote_src: yes
+                #dest: /var/www/html
 
           - name: start apache2
             service:
