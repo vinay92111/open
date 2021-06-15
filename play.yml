@@ -1,4 +1,20 @@
 - hosts: all
   tasks:
           - name: Execute command on instance
-            shell: "echo 'Welcome to india' > /tmp/vinay" 
+            shell: "echo 'Welcome to india' > /tmp/vinay"
+
+
+          - name: Install apache2
+            yum:
+                name: apache2
+                state: latest
+            become: yes
+
+
+          - name: start apache2
+            service:
+                name: apache2
+                state: started
+            become: yes
+
+
