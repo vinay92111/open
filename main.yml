@@ -1,0 +1,111 @@
+#simple task
+#
+  - name:
+    apt:
+        update_cache=yes
+        cache_valid_time=3600
+    become: yes
+
+    # to see the working of hnadler
+
+  - name: install nginx
+    apt: name=nginx state=present
+
+    notify: devops
+    become: yes
+
+    # To see the use of variable
+
+  - name: to copy the data
+    copy:
+          src: "{{ var1 }}"
+          dest: "{{ var2 }}"
+    become: yes
+    # to inser a block in a file
+
+  - name: to create a file
+    file:
+         path: /tmp/devops
+         state: touch
+    become: yes
+
+
+  - name: to insert a block in file
+    blockinfile:
+            path: /tmp/devops
+            block: |
+               if the block is inserted
+               we can able to use that
+    become: yes
+
+    # to see the wroking of template 
+
+  - name: to see the use of template
+    template:
+            src: app.conf.j2
+            dest: /tmp/app.conf
+    become: yes
+
+    # Using the block and rescure to run commands
+
+
+    #- name: to see the use of block and rescue
+  - block:
+      - lineinfile:
+            path: /tmp/new
+            line: "tp print something"
+
+
+    rescue: 
+       - file:
+            path: /tmp/new
+            state: touch
+
+       - lineinfile: 
+            path: /tmp/new
+            line: "tp print something"
+
+    always:
+       - service:
+               name: nginx
+               state: restarted     
+    
+    become: yes
+
+    # to know about the wait for module
+            
+  - name: to get idea of wait for
+    wait_for:
+
+            path: /tmp/new
+
+    become: yes
+
+
+    # to know about the working of loops
+   
+  - name: working of loops
+    copy:
+            src: "{{ item }}"
+            dest: /tmp/new
+
+    with_items:
+            - /etc/passwd
+            - /etc/group
+
+    become: yes
+
+    # to get the working of condition 
+
+  - name:to see the use of condition
+    file: 
+        
+          path: /tmp/fold
+          state: touch
+
+    when: ansible_distribution == "Ubuntu"
+
+    become: yes
+
+
+
