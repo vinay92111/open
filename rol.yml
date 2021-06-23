@@ -1,0 +1,8 @@
+- hosts: all
+  tasks:
+
+  roles: 
+     - nginx
+     - php
+     - db
+  become: yes
